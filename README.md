@@ -1,35 +1,30 @@
 # chaussette.py
 
-Python script to reproduce socks diagram of a Framatome P3 1300Mw nuclear reactor.
+Python script to reproduce boot diagram (pressure, temperature, operating range) of a Framatome P3 1300Mw nuclear reactor.
 
 ## Features
 
-* 
+* Do shitty graph of the operating range of a pressurized water reactor.
 
 ## Usage
 
-*
+* python3 chaussette.py
 
 ### Command-line options
 
 ```
-usage: strava_local_heatmap_browser.py [-h] [--gpx-dir DIR]
-                                       [--gpx-filter FILTER] [--output OUTPUT]
-                                       [--radius RADIUS] [--blur BLUR]
-
-optional arguments:
-  -h, --help           show this help message and exit
-  --gpx-dir DIR        directory containing the GPX files (default: gpx)
-  --gpx-filter FILTER  glob filter for the GPX files (default: *.gpx)
-  --output OUTPUT      output HTML file (default: strava_local_heatmap.html)
+None yet
 ```
 
 ## Python dependencies
 
 ```
-Shit
+iapws (IAPWS97)
+numpy
+mathplot
+argparse (not really needed yet)
 ```
 
 ## Todo
  
-*
+* need to add a approximation of the reactor coolant pump NPSH lower limit in the lower limit of AN/GV range.
