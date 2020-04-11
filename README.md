@@ -6,6 +6,8 @@ Python script to reproduce boot diagram (pressure, temperature, operating range)
 
 * Do shitty graph of the operating range of a pressurized water reactor.
 
+![Figure_1.png](Figure_1.png)
+
 ## Usage
 
 * python3 chaussette.py
