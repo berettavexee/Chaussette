@@ -1,7 +1,10 @@
 # chaussette.py
 
 Python script to reproduce boot diagram (pressure, temperature, operating range) of a Framatome P3 1300Mw nuclear reactor.
-It use the [IAPWS97](http://www.iapws.org/) steam/liquid saturation curve and table. The goal is not to obtain curves faithful to the hundredth. 
+It use the [IAPWS97](http://www.iapws.org/) steam/liquid saturation curve and table. All numerical values come from the 
+[INSTN thermohydraulique des REP](http://www-instn.cea.fr/base-d-ouvrage/Ouvrage/thermohydraulique-des-reacteurs.html) and
+[INSTN Exploitation des coeurs REP](http://www-instn.cea.fr/base-d-ouvrage/Ouvrage/exploitation-des-coeurs-rep.html). 
+No EDF or Framatome documentation was used for this project. The goal is not to obtain curves faithful to the hundredth. 
 It is a tool to determinate the reactor operating domaine during data analysis. That's why it is written in python, the main analysis 
 tools in my work environment are already in python.
 
@@ -14,7 +17,7 @@ hypothetical translation.
 - API, cold shutdown, open vessel 
 - AN/RRA, hot shutdown on Reactor Residual Heat Remover
 - AN/GV, hot shutdown on steam generator
-- RP, Reactor in operaiton 
+- RP, Reactor in operation 
 
 If not specified, temperatures are in degrees Celcius and pressures in absolute bar.
 
@@ -22,7 +25,7 @@ Reactor coolant pump NPSH was approximated to Pstat + 17 bar abs. It's an approx
 I don't have data on the actual performance of the pumps or their specs. 
 
 I shouldn't have to write this down, but better safe than sorry.
-This is a weekend project, which does not benefit from any form of guarantee, quality assurance or follow-up. It is in no way related to my employer. 
+This is a one man weekend project, which does not benefit from any form of guarantee, quality assurance or follow-up. 
 Under no circumstances should it be used for any application involving nuclear safety.  
 
 ## Features

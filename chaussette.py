@@ -123,7 +123,7 @@ def main(args):
     main_ax.set_ylabel('Pression (bar abs.)')
     main_ax.set_title('Diagram Pression, temperature')
 
-    # plots upper and lower limits
+    # plots cruves
     plt.plot(
         trange_full,
         psat_IAPWS97(trange_full),
