@@ -35,21 +35,21 @@ import matplotlib.pyplot as plt
 # functions
 
 
-def Kelvin_to_Celsius(temperature):
+def kelvin_to_celsius(temperature):
     '''
     Convert Kelvin to Celsius
     '''
-    return(temperature - 273.15)
+    return temperature - 273.15
 
 
-def Celsius_to_Kelvin(temperature):
+def celsius_to_kelvin(temperature):
     '''
     Convert Celsius to Kelvin
     '''
-    return(temperature + 273.15)
+    return temperature + 273.15
 
 
-def Psat_IAPWS97(tsat, delta_tsat=0, delta_psat=0):
+def psat_IAPWS97(tsat, delta_tsat=0, delta_psat=0):
     '''
     IAPWS 97 Formulas (input Kelvin, output MPa)
     Return P saturation function of T
@@ -68,14 +68,14 @@ def Psat_IAPWS97(tsat, delta_tsat=0, delta_psat=0):
     # Convert to Kelvin, filter out of bound values and apply delta tsat.
     # I do love lambda function and generator/
     tsat = [
-        Celsius_to_Kelvin(item - delta_tsat)
-        if 273.15 <= Celsius_to_Kelvin(item - delta_tsat)
-        and Celsius_to_Kelvin(item - delta_tsat) <= 647.096
+        celsius_to_kelvin(item - delta_tsat)
+        if celsius_to_kelvin(item - delta_tsat) >= 273.15
+        and celsius_to_kelvin(item - delta_tsat) <= 647.096
         else 647.096  # Set to critical point when out of bounds
         for item in tsat]
-    p = [IAPWS97(T=temperature, x=0).P * 10 +
-         delta_psat for temperature in tsat]
-    return(p)
+    pressure = [IAPWS97(T=temperature, x=0).P * 10 +
+                delta_psat for temperature in tsat]
+    return pressure
 
 
 def main(args):
@@ -84,33 +84,34 @@ def main(args):
     '''
 
     # Let define the temperature ranges
-    Trange_full = np.arange(10, 306)  # Full temperature range 10-306°c
-    Trange_RRA = np.arange(10, 160)  # RRA temperature range 10°c - 160°c
+    trange_full = np.arange(10, 306)  # Full temperature range 10-306°c
+    trange_RRA = np.arange(10, 160)  # RRA temperature range 10°c - 160°c
     # AN/GV temperature range 160°c - 297.2°c
-    Trange_ANGV = np.arange(160, 297)
-    Trange_RP = np.arange(297, 306)  # FP temperature range 297.2°c - 306.5°c
+    trange_ANGV = np.arange(160, 297)
+    trange_RP = np.arange(297, 306)  # FP temperature range 297.2°c - 306.5°c
 
     # upper limit of AN/RRA
-    Prange_RRA_max = np.repeat(31, len(Trange_RRA))
+    prange_RRA_max = np.repeat(31, len(trange_RRA))
 
     # lower limit of AN/RRA
-    Prange_RRA_min = np.concatenate([
+    prange_RRA_min = np.concatenate([
         np.repeat(5, 70 - 10),
         np.repeat(25, 160 - 70)])
 
     # upper limit of AN/GV domaine
-    Prange_ANGV_max = np.minimum(np.minimum(
-        Psat_IAPWS97(Trange_ANGV, -110, 0),
-        Psat_IAPWS97(Trange_ANGV, 0, 110)),
-        np.repeat(float(155), len(Trange_ANGV)))
+    prange_ANGV_max = np.minimum(
+        np.minimum(
+            psat_IAPWS97(trange_ANGV, -110, 0),
+            psat_IAPWS97(trange_ANGV, 0, 110)),
+        np.repeat(float(155), len(trange_ANGV)))
 
     # lower limit of AN/GV domaine
-    Prange_ANGV_min = np.maximum(
-        Psat_IAPWS97(Trange_ANGV, -30, 0),
-        np.repeat(float(27), len(Trange_ANGV))
+    prange_ANGV_min = np.maximum(
+        psat_IAPWS97(trange_ANGV, -30, 0),
+        np.repeat(float(27), len(trange_ANGV))
     )
     # RP this one is easy
-    Prange_RP = np.repeat(155, len(Trange_RP))
+    prange_RP = np.repeat(155, len(trange_RP))
 
     # graph parameters
     fig, main_ax = plt.subplots()
@@ -120,46 +121,48 @@ def main(args):
     main_ax.set_ylabel('Pression (bar abs.)')
     main_ax.set_title('Diagram Pression, temperature')
 
-    # plots upper and lower limits 
+    # plots upper and lower limits
     plt.plot(
-        Trange_full,
-        Psat_IAPWS97(Trange_full),
+        trange_full,
+        psat_IAPWS97(trange_full),
         linestyle='dashed',
         label='Courbe de saturation')
-    plt.plot(Trange_RRA, Prange_RRA_min)
-    plt.plot(Trange_RRA, Prange_RRA_max)
-    plt.plot(Trange_ANGV, Prange_ANGV_max)
-    plt.plot(Trange_ANGV, Prange_ANGV_min)
-    plt.plot(Trange_RP, Prange_RP)
+    plt.plot(trange_RRA, prange_RRA_min)
+    plt.plot(trange_RRA, prange_RRA_max)
+    plt.plot(trange_ANGV, prange_ANGV_max)
+    plt.plot(trange_ANGV, prange_ANGV_min)
+    plt.plot(trange_RP, prange_RP)
 
     # plots rectangles
-    plt.gca().add_patch(plt.Rectangle([10, 0], 50, 5, fill = False )) # API domaine
-    plt.gca().add_patch(plt.Rectangle([160,27], 20, 4, fill = False)) # AN/GV at RRA connection conditions
+    plt.gca().add_patch(plt.Rectangle(
+        [10, 0], 50, 5, fill=False))  #  API domaine
+    #  AN/GV at RRA connection conditions
+    plt.gca().add_patch(plt.Rectangle([160, 27], 20, 4, fill=False))
 
-    # 
-    plt.hlines(155, 0, 350, label='155 bar', linewidth = 0.5, linestyle='dashed')
-    plt.vlines(297, 0, 200, label='', linewidth = 0.5, linestyle='dashed')
-    
-    # vertical lines eye candy 
+    #
+    plt.hlines(155, 0, 350, label='155 bar', linewidth=0.5, linestyle='dashed')
+    plt.vlines(297, 0, 200, label='', linewidth=0.5, linestyle='dashed')
+
+    # vertical lines eye candy
     plt.vlines(
         10,
-        Prange_RRA_min[0],
-        Prange_RRA_max[0],
+        prange_RRA_min[0],
+        prange_RRA_max[0],
         label='limit inf temp AN/RRA')
     plt.vlines(
         160,
-        Prange_RRA_min[-1],
-        Prange_ANGV_max[0],
+        prange_RRA_min[-1],
+        prange_ANGV_max[0],
         label='limit inf temp AN/GV')
     plt.vlines(
         297,
-        Prange_ANGV_min[-1],
-        Prange_ANGV_max[-1],
+        prange_ANGV_min[-1],
+        prange_ANGV_max[-1],
         label='limit sup temp AN/GV')
-    # Render the graph 
+    # Render the graph
     plt.show()
 
-    return(None)
+    return None
 
 
 # main
