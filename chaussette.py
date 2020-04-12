@@ -63,6 +63,7 @@ def Psat_IAPWS97(tsat, delta_tsat=0, delta_psat=0):
         -- Warning --
         temperature above 647°K will return the critical point value
         It is incorrect and only done to prevent handling error and missing point.
+        It is mostly for the Psat + 110 bar abs curve that quickly skyrocket.
     '''
     # Convert to Kelvin, filter out of bound values and apply delta tsat.
     # I do love lambda function and generator/
@@ -119,7 +120,7 @@ def main(args):
     main_ax.set_ylabel('Pression (bar abs.)')
     main_ax.set_title('Diagram Pression, temperature')
 
-    # plots
+    # plots upper and lower limits 
     plt.plot(
         Trange_full,
         Psat_IAPWS97(Trange_full),
@@ -131,21 +132,31 @@ def main(args):
     plt.plot(Trange_ANGV, Prange_ANGV_min)
     plt.plot(Trange_RP, Prange_RP)
 
-    '''
-    plt.hlines(155, 0, 350, label='155 bar')
-    plt.hlines(27, 0, 350, label='155 bar')
-    '''
+    # plots rectangles
+    plt.gca().add_patch(plt.Rectangle([10, 0], 50, 5, fill = False )) # API domaine
+    plt.gca().add_patch(plt.Rectangle([160,27], 20, 4, fill = False)) # AN/GV at RRA connection conditions
+
+    # 
+    plt.hlines(155, 0, 350, label='155 bar', linewidth = 0.5, linestyle='dashed')
+    plt.vlines(297, 0, 200, label='', linewidth = 0.5, linestyle='dashed')
+    
+    # vertical lines eye candy 
+    plt.vlines(
+        10,
+        Prange_RRA_min[0],
+        Prange_RRA_max[0],
+        label='limit inf temp AN/RRA')
     plt.vlines(
         160,
-        Prange_ANGV_min[0],
+        Prange_RRA_min[-1],
         Prange_ANGV_max[0],
         label='limit inf temp AN/GV')
-    plt.vlines(297,
-               Prange_ANGV_min[-1],
-               Prange_ANGV_max[-1],
-               label='limit sup temp AN/GV')
-    # plt.vlines(306.5, 0, 155, label='limit sup temp RP')
-
+    plt.vlines(
+        297,
+        Prange_ANGV_min[-1],
+        Prange_ANGV_max[-1],
+        label='limit sup temp AN/GV')
+    # Render the graph 
     plt.show()
 
     return(None)
