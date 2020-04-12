@@ -140,17 +140,15 @@ def main(args):
     plt.plot(trange_ANGV, prange_ANGV_min)
     plt.plot(trange_RP, prange_RP)
 
-    # plots rectangles
+    # Plots rectangles
     plt.gca().add_patch(plt.Rectangle(
-        [10, 0], 50, 5, fill=False))  #  API domaine
-    #  AN/GV at RRA connection conditions
-    plt.gca().add_patch(plt.Rectangle([160, 27], 20, 4, fill=False))
-
-    #
-    plt.hlines(155, 0, 350, label='155 bar', linewidth=0.5, linestyle='dashed')
-    plt.vlines(297, 0, 200, label='', linewidth=0.5, linestyle='dashed')
+        [10, 0], 50, 5, fill=False, linewidth=1.5))  #  API domaine
+    # AN/GV at RRA connection conditions
+    plt.gca().add_patch(plt.Rectangle([160, 27], 20, 4, fill=False, linewidth=1.5))
 
     # vertical lines eye candy
+    plt.hlines(155, 0, 350, label='155 bar', linewidth=0.5, linestyle='dashed')
+    plt.vlines(297, 0, 200, label='', linewidth=0.5, linestyle='dashed')
     plt.vlines(
         10,
         prange_RRA_min[0],
@@ -166,6 +164,9 @@ def main(args):
         prange_ANGV_min[-1],
         prange_ANGV_max[-1],
         label='limit sup temp AN/GV')
+    # Text
+    plt.text(30, 20, 'AN/GV')
+    plt.text(200, 80, 'AN/RRA')
     # Render the graph
     plt.show()
 
