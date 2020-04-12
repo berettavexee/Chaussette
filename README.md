@@ -18,8 +18,8 @@ hypothetical translation.
 
 If not specified, temperatures are in degrees Celcius and pressures in absolute bar.
 
-Reactor coolant pump NPSG was approximated to Pstat + 17 bar abs. It's an approximation that seems to fit the curves and makes sense 
-physically. I don't have access to the engineering specs or the actual performance of the pumps. 
+Reactor coolant pump NPSH was approximated to Pstat + 17 bar abs. It's an approximation that seems to fit the curves and makes sense. 
+I don't have data on the actual performance of the pumps or their specs. 
 
 I shouldn't have to write this down, but better safe than sorry.
 This is a weekend project, which does not benefit from any form of guarantee, quality assurance or follow-up. It is in no way related to my employer. 
