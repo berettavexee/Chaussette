@@ -30,7 +30,7 @@ Under no circumstances should it be used for any application involving nuclear s
 
 ## Features
 
-* Do shitty graph of the operating range of a pressurized water reactor.
+* Currently, render the graph of operating domaine of a pressurized water reactor.
 
 ![Figure_1.png](Figure_1.png)
 
