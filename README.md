@@ -8,7 +8,7 @@ tools in my work environment are already in python.
 I'll start with "simple" things. Like the pressure-temperature diagram. We'll see about the choice of temperature sensors and 
 whether the RRA/RHR is connected much later.
 
-All the acronyms are in French, because it made no sense to translate them in most case and I have no one to verify a 
+All the acronyms are in French, because it made no sense to translate them in most case and I have no native speaker at hand to verify a 
 hypothetical translation. 
 
 - API, cold shutdown, open vessel 
@@ -17,6 +17,9 @@ hypothetical translation.
 - RP, Reactor in operaiton 
 
 If not specified, temperatures are in degrees Celcius and pressures in absolute bar.
+
+Reactor coolant pump NPSG was approximated to Pstat + 17 bar abs. It's an approximation that seems to fit the curves and makes sense 
+physically. I don't have access to the engineering specs or the actual performance of the pumps. 
 
 I shouldn't have to write this down, but better safe than sorry.
 This is a weekend project, which does not benefit from any form of guarantee, quality assurance or follow-up. It is in no way related to my employer. 
@@ -51,4 +54,3 @@ argparse (not really needed yet)
 
 ## Todo
  
-* need to add a approximation of the reactor coolant pump NPSH lower limit in the lower limit of AN/GV range.

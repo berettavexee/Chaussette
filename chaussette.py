@@ -66,7 +66,7 @@ def psat_IAPWS97(tsat, delta_tsat=0, delta_psat=0):
         It is mostly for the Psat + 110 bar abs curve that quickly skyrocket.
     '''
     # Convert to Kelvin, filter out of bound values and apply delta tsat.
-    # I do love lambda function and generator/
+    # I do like lambda function and generator/
     tsat = [
         celsius_to_kelvin(item - delta_tsat)
         if celsius_to_kelvin(item - delta_tsat) >= 273.15
@@ -88,7 +88,7 @@ def main(args):
     trange_RRA = np.arange(10, 160)  # RRA temperature range 10°c - 160°c
     # AN/GV temperature range 160°c - 297.2°c
     trange_ANGV = np.arange(160, 297)
-    trange_RP = np.arange(297, 306)  # FP temperature range 297.2°c - 306.5°c
+    trange_RP = np.arange(297, 306)  # RP temperature range 297.2°c - 306.5°c
 
     # upper limit of AN/RRA
     prange_RRA_max = np.repeat(31, len(trange_RRA))
@@ -107,13 +107,15 @@ def main(args):
 
     # lower limit of AN/GV domaine
     prange_ANGV_min = np.maximum(
-        psat_IAPWS97(trange_ANGV, -30, 0),
-        np.repeat(float(27), len(trange_ANGV))
-    )
-    # RP this one is easy
+        np.maximum(
+            psat_IAPWS97(trange_ANGV, -30, 0),
+            psat_IAPWS97(trange_ANGV, 0, 17)),
+        np.repeat(float(27), len(trange_ANGV)))
+
+    # RP this is the easy one 
     prange_RP = np.repeat(155, len(trange_RP))
 
-    # graph parameters
+    # mathplot figure parameters
     fig, main_ax = plt.subplots()
     main_ax.set_xlim(0, 350)
     main_ax.set_ylim(0, 160)
@@ -127,6 +129,11 @@ def main(args):
         psat_IAPWS97(trange_full),
         linestyle='dashed',
         label='Courbe de saturation')
+    plt.plot(
+        trange_ANGV,
+        psat_IAPWS97(trange_ANGV, 0, 17),
+        linestyle='dashed',
+        label='NPSH approximation')
     plt.plot(trange_RRA, prange_RRA_min)
     plt.plot(trange_RRA, prange_RRA_max)
     plt.plot(trange_ANGV, prange_ANGV_max)
