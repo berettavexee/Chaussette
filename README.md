@@ -32,15 +32,15 @@ Under no circumstances should it be used for any application involving nuclear s
 ![Figure_1.png](Figure_1.png)
 
 ## Usage
-'''
+```
 python3 chaussette.py
-'''
+```
 
 Requirements PIP install 
 
-'''
+```
 pip3 install -r requirements.txt
-'''
+```
 
 ### Command-line options
 
