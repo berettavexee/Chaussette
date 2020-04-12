@@ -165,8 +165,8 @@ def main(args):
         prange_ANGV_max[-1],
         label='limit sup temp AN/GV')
     # Text
-    plt.text(30, 20, 'AN/GV')
-    plt.text(200, 80, 'AN/RRA')
+    plt.text(30, 20, 'AN/RRA')
+    plt.text(200, 80, 'AN/GV')
     # Render the graph
     plt.show()
 
