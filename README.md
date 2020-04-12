@@ -1,7 +1,7 @@
 # chaussette.py
 
 Python script to reproduce boot diagram (pressure, temperature, operating range) of a Framatome P3 1300Mw nuclear reactor.
-It use the IAPWS97 steam/liquid saturation curve and table. The goal is not to obtain curves faithful to the hundredth. 
+It use the [IAPWS97](http://www.iapws.org/) steam/liquid saturation curve and table. The goal is not to obtain curves faithful to the hundredth. 
 It is a tool to determinate the reactor operating domaine during data analysis. That's why it is written in python, the main analysis 
 tools in my work environment are already in python.
 
