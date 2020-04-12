@@ -1,1 +1,3 @@
-folium==0.10.0
+iapws
+numpy
+mathplot

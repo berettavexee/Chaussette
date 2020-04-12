@@ -112,7 +112,7 @@ def main(args):
             psat_IAPWS97(trange_ANGV, 0, 17)),
         np.repeat(float(27), len(trange_ANGV)))
 
-    # RP this is the easy one 
+    # RP this is the easy one
     prange_RP = np.repeat(155, len(trange_RP))
 
     # mathplot figure parameters
