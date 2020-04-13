@@ -60,5 +60,8 @@ mathplot
 argparse (not really needed yet)
 ```
 
-## Todo
+## ToDo - Work in progess
+
+* The classfier testrun are in the jupyter notebook `Test_02.ipynb`
+* A bit of documentation on boolean indexes and fast filters in Python. `Reading_list.MD`
  
